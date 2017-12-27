@@ -1,0 +1,24 @@
+
+#subject{
+	color: pink;
+	font-size: 80px;
+	text-align: center;
+	
+}
+
+a:hover, a:link, a:visited{
+	text-decoration:  none;	
+	color: black;
+}
+
+#ta, #regi{
+	font color: #993366;
+	cellpadding:5;
+	bgcolor:pink;	
+	border: 1px; red;
+}
+
+td{
+	margin: 10px;	
+}
+

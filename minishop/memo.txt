@@ -1,0 +1,127 @@
+-- 회원 테이블 생성
+drop sequence meseq ;
+create sequence meseq nocache ;
+
+-- SQL> drop table member cascade constraints;
+ 
+drop table member purge ;
+create table member(
+	no number primary key,
+	name varchar2(30) not null,
+	id varchar2(12) not null,
+	password varchar2(12),
+	email varchar2(20),
+	hp1 varchar2(10),
+	hp2 varchar2(10),
+	hp3 varchar2(20),
+	address varchar2(20)
+);
+
+insert into member(no, name, id, password) 
+values(meseq.nextval, '어드민', 'admin', '1234') ;
+insert into member(no, name, id, password) 
+values(meseq.nextval, '홍길동', 'hong', '5678') ;
+commit;
+
+
+col name for  a12
+col id for a12
+col password for a12
+col address for a12
+
+
+-- 카테고리 테이블
+drop sequence ceteseq ;
+drop table cate purge ;
+
+create sequence ceteseq nocache ;
+create table cate(
+	cnum 	number primary key,
+	ccode	varchar2(20) not null,
+	cname 	varchar2(50) not null	
+);
+
+insert into cate(cnum,ccode,cname) values(ceteseq.nextval, 'shoes', '하이힐' ) ;
+insert into cate(cnum,ccode,cname) values(ceteseq.nextval, 'shoes', '스니커즈') ;
+insert into cate(cnum,ccode,cname) values(ceteseq.nextval, 'shoes', '부츠') ;
+insert into cate(cnum,ccode,cname) values(ceteseq.nextval, 'bag', '크로스백') ;
+insert into cate(cnum,ccode,cname) values(ceteseq.nextval, 'bag', '토트백') ;
+insert into cate(cnum,ccode,cname) values(ceteseq.nextval, 'bag', '백팩') ;
+insert into cate(cnum,ccode,cname) values(ceteseq.nextval, 'bag', '미니백') ;
+
+
+
+
+-- 상품 테이블
+drop sequence prodseq ;
+create sequence prodseq nocache;
+
+drop table prod purge ;
+create table prod(
+	pnum 		int not null primary key,
+	pname 		varchar2(50) not null,
+	pcategory  	varchar2(20) not null,
+	pcompany 	varchar2(50),
+	pimage   		varchar2(30),
+	pqty		int default 0,
+	price   		int default 0,
+	pspec   		varchar2(12),
+	pcontents 	varchar2(300),
+	point   		int default 0,
+	pinputdate 	varchar2(10),
+	pcate2	varchar2(20) not null
+);
+
+col pname for a12
+col pcompany for a12
+col pimage for a12
+col pcontents for a12
+select * from prod;
+
+
+-- 매출 주문 테이블
+drop sequence ordseq ;
+create sequence ordseq nocache;  
+
+-- orderId(주문 아이디) : 동일한 시간대에 주문한 내역은 동일한 주문 아이디를 가진다.
+drop table ord purge ;
+--drop table ord cascade constraint;
+create table ord(
+	orderId number, -- 주문번호(orderseq)
+	memno number, -- 회원번호
+	pnum number, -- 상품번호
+	qty number, -- 수량
+	amount number -- 전체가격
+);
+
+drop table board2 purge ;
+create table board2(
+	num number not null primary key,
+	writer varchar2(30) not null,
+	kind varchar2(30) not null,
+	email varchar2(30),
+	subject varchar2(30) not null,
+	passwd varchar2(12) not null,
+	reg_date date not null,
+	readcount int default 0,
+	ref number  default 0 not null,
+	re_step number default 0 not null,
+	re_level number default 0 not null,
+	content varchar2(50) not null
+);
+
+drop sequence board2_seq ;
+create sequence board2_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+
+insert into board2(num,writer,kind, email,subject,passwd,reg_date,ref,re_step,re_level,content)
+values(board2_seq.nextval,'a1','교환', 'email', '제목', '1111','2015-1-1',1,0,0,'내용1');
+
+insert into board2(num,writer,kind, email,subject,passwd,reg_date,ref,re_step,re_level,content)
+values(board2_seq.nextval,'a1','교환', 'email', '제목', '1111','2015-1-1',board2_seq.nextval,0,0,'내용1');
+
